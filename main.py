@@ -56,7 +56,11 @@ async def code_interpreter(request: CodeRequest):
 
     
     matches = re.findall(r'File "<string>", line (\d+)', tb)
-    error_lines = [int(x) for x in matches]
+
+    if matches:
+        error_lines = [int(matches[-1])]
+    else:
+        error_lines = []
 
     return {
         "error": error_lines,
